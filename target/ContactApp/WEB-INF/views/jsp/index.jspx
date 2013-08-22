@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding = "UTF-8" standalone = "no"?>
+
+<div xmlns:jsp = "http://java.sun.com/JSP/Page"
+     xmlns:c = "http://java.sun.com/jstl/core"
+     version = "2.0">
+
+    <head>
+        <link rel = "stylesheet" type = "text/css" media = "screen" href = "../../../web_resources/css/standard.css"/>
+    </head>
+
+    <jsp:directive.page contentType="text/html; charset = UTF-8"/>
+
+    <form action="contact" method="get">
+        <input type="submit" value="Click me!"/>
+    </form>
+
+    <br/>
+    <form action="create_contact" method="get">
+        <input type="text" name = "first_name"/>
+        <br/>
+        <input type="text" name = "last_name"/>
+        <br/>
+        <input type="text" name = "description"/>
+        <br/>
+        <input type="submit" name = "Create new contact"/>
+
+    </form>
+
+</div>

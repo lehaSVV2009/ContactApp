@@ -1,0 +1,109 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans:beans
+        xmlns="http://www.springframework.org/schema/mvc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            "
+        >
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.kadet.contactmanager.controller"/>
+    <context:component-scan base-package="com.kadet.contactmanager.dao"/>
+    <context:component-scan base-package="com.kadet.contactmanager.service"/>
+
+    <beans:import resource="configuration/data.xml" />
+
+    <!--
+    <beans:bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <beans:property name="prefix" value="/WEB-INF/views/jsp/"/>
+        <beans:property name="suffix" value=".jspx"/>
+        <beans:property name="order" value="2"/>
+    </beans:bean>
+     -->
+    <beans:bean id="tilesViewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+        <beans:property name="prefix" value="/WEB-INF/views/jsp/"/>
+        <beans:property name="suffix" value=".jspx"/>
+        <beans:property name="order" value="1" />
+    </beans:bean>
+
+    <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+        <beans:property name="definitions">
+            <beans:list>
+                <beans:value>/WEB-INF/layouts/layouts.xml</beans:value>
+            </beans:list>
+        </beans:property>
+
+    </beans:bean>
+
+    <!--
+    <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+    </beans:bean>
+    <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+        <beans:property name="definitions">
+            <beans:list>
+                <beans:value>/WEB-INF/layouts/layouts.xml</beans:value>
+                <beans:value>/WEB-INF/contacts/views.xml</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>           -->
+
+    <!--Internatiolization-->
+
+    <beans:bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="classpath:application" />
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+    </beans:bean>
+
+    <beans:bean id="localeChangeInterceptor"
+          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <beans:property name="paramName" value="lang" />
+    </beans:bean>
+
+    <beans:bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <beans:property name="defaultLocale" value="en"/>
+    </beans:bean>
+
+    <beans:bean id="handlerMapping"
+          class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <beans:property name="interceptors">
+            <beans:ref bean="localeChangeInterceptor" />
+        </beans:property>
+    </beans:bean>
+
+    <interceptors>
+        <beans:bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <beans:property name="paramName" value="lang" />
+        </beans:bean>
+    </interceptors>
+
+    <!--Theme support-->
+
+    <beans:bean class="org.springframework.ui.context.support.ResourceBundleThemeSource"
+                id="themeSource">
+    </beans:bean>
+
+    <beans:bean class="org.springframework.web.servlet.theme.CookieThemeResolver"
+                id="themeResolver"
+                p:cookieName="theme"
+                p:defaultThemeName="standard"/>
+
+    <annotation-driven/>
+    <default-servlet-handler/>
+
+</beans:beans>
